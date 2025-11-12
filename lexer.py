@@ -44,7 +44,42 @@ import sys
 #     # ... agregar todas las palabras reservadas de Dart
 # }
 
-reserved = {}  # Andrés llenará esto
+reserved = {
+    'if': 'IF',
+    'else': 'ELSE',
+    'for': 'FOR',
+    'while': 'WHILE',
+    'do': 'DO',
+    'var': 'VAR',
+    'const': 'CONST',
+    'final': 'FINAL',
+    'void': 'VOID',
+    'return': 'RETURN',
+    'class': 'CLASS',
+    'int': 'INT',
+    'double': 'DOUBLE',
+    'String': 'STRING_TYPE',
+    'bool': 'BOOL',
+    'true': 'TRUE',
+    'false': 'FALSE',
+    'null': 'NULL',
+    'print': 'PRINT',
+    'import': 'IMPORT',
+    'as': 'AS',
+    'break': 'BREAK',
+    'continue': 'CONTINUE',
+    'switch': 'SWITCH',
+    'case': 'CASE',
+    'default': 'DEFAULT',
+    'extends': 'EXTENDS',
+    'implements': 'IMPLEMENTS',
+    'new': 'NEW',
+    'this': 'THIS',
+    'super': 'SUPER',
+    'static': 'STATIC',
+    'async': 'ASYNC',
+    'await': 'AWAIT',
+}  # Andrés llenará esto
 
 # ============================================================================
 # SECCIÓN PARA ANDRÉS SALINAS (ivandresalin)
@@ -59,41 +94,39 @@ reserved = {}  # Andrés llenará esto
 
 tokens = [
     # Tokens de Andrés (ivandresalin) - PENDIENTE
-    # 'PLUS',           # +
-    # 'MINUS',          # -
-    # 'TIMES',          # *
-    # 'DIVIDE',         # /
-    # 'MODULO',         # %
-    # 'EQUALS',         # ==
-    # 'NOTEQUAL',       # !=
-    # 'LESSTHAN',       # <
-    # 'GREATERTHAN',    # >
-    # 'LESSEQUAL',      # <=
-    # 'GREATEREQUAL',   # >=
-    # 'AND',            # &&
-    # 'OR',             # ||
-    # 'NOT',            # !
-    # 'ASSIGN',         # =
-    # 'LPAREN',         # (
-    # 'RPAREN',         # )
-    # 'LBRACE',         # {
-    # 'RBRACE',         # }
-    # 'LBRACKET',       # [
-    # 'RBRACKET',       # ]
-    # 'SEMICOLON',      # ;
-    # 'COMMA',          # ,
-    # 'DOT',            # .
-    # 'COLON',          # :
-    # 'ARROW',          # =>
+    'PLUS',           # +
+    'MINUS',          # -
+    'TIMES',          # *
+    'DIVIDE',         # /
+    'MODULO',         # %
+    'EQUALS',         # ==
+    'NOTEQUAL',       # !=
+    'LESSTHAN',       # <
+    'GREATERTHAN',    # >
+    'LESSEQUAL',      # <=
+    'GREATEREQUAL',   # >=
+    'AND',            # &&
+    'OR',             # ||
+    'NOT',            # !
+    'ASSIGN',         # =
+    'LPAREN',         # (
+    'RPAREN',         # )
+    'LBRACE',         # {
+    'RBRACE',         # }
+    'LBRACKET',       # [
+    'RBRACKET',       # ]
+    'SEMICOLON',      # ;
+    'COMMA',          # ,
+    'DOT',            # .
+    'COLON',          # :
+    'ARROW',          # =>
+    'PLUSPLUS',       # ++
+    'MINUSMINUS',     # --
     
     # Tokens de Mateo (bironmanusa)
     'NUMBER',         # Números enteros y decimales
     'STRING',         # Cadenas de texto
     'ID',             # Identificadores
-
-    # Token temporal para que el lexer funcione (Samir)
-    # Tus compañeros reemplazarán esto con sus tokens reales
-    'DUMMY',  # Token temporal - ELIMINAR cuando se agreguen los tokens reales
 ] + list(reserved.values())
 
 
@@ -103,36 +136,43 @@ tokens = [
 # ============================================================================
 
 # Andrés debe agregar reglas simples como:
-# t_PLUS = r'\+'
-# t_MINUS = r'-'
-# t_TIMES = r'\*'
-# t_DIVIDE = r'/'
-# t_MODULO = r'%'
-# t_EQUALS = r'=='
-# t_NOTEQUAL = r'!='
-# t_LESSTHAN = r'<'
-# t_LESSEQUAL = r'<='
-# t_GREATERTHAN = r'>'
-# t_GREATEREQUAL = r'>='
-# t_AND = r'&&'
-# t_OR = r'\|\|'
-# t_NOT = r'!'
-# t_ASSIGN = r'='
-# t_LPAREN = r'\('
-# t_RPAREN = r'\)'
-# t_LBRACE = r'\{'
-# t_RBRACE = r'\}'
-# t_LBRACKET = r'\['
-# t_RBRACKET = r'\]'
-# t_SEMICOLON = r';'
-# t_COMMA = r','
-# t_DOT = r'\.'
-# t_COLON = r':'
-# t_ARROW = r'=>'
+# Operadores aritméticos
+t_PLUS = r'\+'
+t_MINUS = r'-'
+t_TIMES = r'\*'
+t_DIVIDE = r'/'
+t_MODULO = r'%'
 
-# Regla temporal para que el lexer funcione (Samir)
-# Tus compañeros eliminarán esto cuando agreguen sus tokens
-t_DUMMY = r'[a-zA-Z0-9_{}();\[\]=+\-*/<>!,.:"]+'  # Reconoce cualquier cosa temporalmente
+# Operadores de comparación (orden importante: == antes que =)
+t_EQUALS = r'=='
+t_NOTEQUAL = r'!='
+t_LESSEQUAL = r'<='
+t_GREATEREQUAL = r'>='
+t_LESSTHAN = r'<'
+t_GREATERTHAN = r'>'
+
+# Operadores lógicos
+t_AND = r'&&'
+t_OR = r'\|\|'
+t_NOT = r'!'
+
+# Operadores de asignación e incremento
+t_PLUSPLUS = r'\+\+'
+t_MINUSMINUS = r'--'
+t_ASSIGN = r'='
+
+# Delimitadores
+t_LPAREN = r'\('
+t_RPAREN = r'\)'
+t_LBRACE = r'\{'
+t_RBRACE = r'\}'
+t_LBRACKET = r'\['
+t_RBRACKET = r'\]'
+t_SEMICOLON = r';'
+t_COMMA = r','
+t_DOT = r'\.'
+t_COLON = r':'
+t_ARROW = r'=>'
 
 
 # ============================================================================
